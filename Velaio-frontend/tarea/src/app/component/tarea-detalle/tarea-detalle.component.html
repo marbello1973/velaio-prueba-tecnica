@@ -1,0 +1,39 @@
+<h2>Detalles de la Tarea: {{ tarea.nombreTareas }}</h2>
+
+<p><strong>Fecha Límite:</strong> {{ tarea.fechaLimite | date: 'dd-MM-yyyy' }}</p>
+
+<p>
+  <strong>Estado:</strong>
+  <input type="checkbox" [(ngModel)]="tarea.completada" (change)="toggleEstado()" /> 
+  {{ tarea.completada ? 'Completada' : 'Pendiente' }}
+</p>
+
+<h3>Personas Asignadas</h3>
+<span *ngFor="let p of tarea.personas; let i = index">    
+  {{p.id}} - {{ p.nombre}} 
+</span>
+
+<ul>
+  <li *ngFor="let persona of tarea.personas">
+    <span>{{ persona.nombre }}</span> <button (click)="eliminarPersona(persona)">Eliminar</button>
+  </li>
+</ul>
+<label for="persona">Asignar Persona:</label>
+<select [(ngModel)]="personaSeleccionada">
+    <option *ngFor="let persona of personas" [ngValue]="persona">{{ persona.nombre }}</option>
+</select>
+<button (click)="asignarPersona()">Asignar</button>
+<h3>Habilidades</h3>
+<ul>
+  <li *ngFor="let habilidad of habilidades">
+    {{ habilidad }} <button (click)="eliminarHabilidad(habilidad)">Eliminar</button>
+  </li>
+</ul>
+
+<label for="habilidad">Agregar Habilidad:</label>
+<input #nuevaHabilidad />
+<button (click)="agregarHabilidad(nuevaHabilidad.value); nuevaHabilidad.value=''">Agregar</button>
+
+<button (click)="guardarCambios()">Guardar</button>
+
+

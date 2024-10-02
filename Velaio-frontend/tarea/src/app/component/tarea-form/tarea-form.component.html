@@ -1,0 +1,43 @@
+
+<form [formGroup]="tareaForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="nombreTareas">Nombre de la Tarea:</label>
+    <input id="nombreTareas" formControlName="nombreTareas" required />
+    <p *ngIf="tareaForm.get('nombreTareas')?.hasError('required')">
+      El nombre de la tarea es requerido
+    </p>
+  </div>
+  <div>
+    <label for="fechaLimite">Fecha Límite:</label>
+    <input id="fechaLimite" type="date" formControlName="fechaLimite" required />
+    <p *ngIf="tareaForm.get('fechaLimite')?.hasError('required')">La fecha es requerido</p>    
+  </div>
+  <div formGroupName="persona" class="persona">
+    <label for="nombre">Nombre de la Persona:</label>
+    <input id="nombre" formControlName="nombre" required />
+    
+    <label for="edad">Edad:</label>
+    <input id="edad" type="number" formControlName="edad" required />
+    <p *ngIf="tareaForm.get('edad')?.hasError('required')">Mayor a 18 años</p>    
+    <div formArrayName="habilidades" class="habilidad">
+      <div *ngFor="let habilidad of getHabilidades().controls; let i = index" [formGroupName]="i">
+        <label for="habilidad">Habilidad:</label>
+        <input formControlName="nombreHabilidad" required />
+        <button type="button" (click)="removeHabilidad(i)">Eliminar</button>
+      </div>
+    </div>
+    <button type="button" (click)="addHabilidad()">Agregar Habilidad</button>
+  </div>
+  
+  <div>
+    <label>
+      Completada:
+      <input type="checkbox" formControlName="completada" />
+    </label>
+  </div>
+
+  <button type="submit">Guardar Tarea</button>
+  <button type="button" (click)="listaTareas()">Lista Tareas</button>
+</form>
+
+
